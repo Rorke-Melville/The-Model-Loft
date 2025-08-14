@@ -5,6 +5,10 @@
   --foreground: #171717;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -20,7 +24,7 @@
 }
 
 body {
-  background: var(--background);
+  background: linear-gradient(to bottom, #000000, #101828);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
