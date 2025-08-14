@@ -49,7 +49,7 @@ const Navbar: React.FC = () => {
   }
 
   const createParticle = (i: number, t: number, d: number[], r: number): Particle => {
-    let rotate = noise(r / 10);
+    const rotate = noise(r / 10);
     return {
       start: getXY(d[0], particleCount - i, particleCount),
       end: getXY(d[1] + noise(7), particleCount - i, particleCount),
@@ -141,7 +141,7 @@ const Navbar: React.FC = () => {
     }
   };
 
-  const handleMobileNavClick = (href: string): void => {
+  const handleMobileNavClick = (): void => {
     setIsMenuOpen(false);
   };
 
@@ -406,7 +406,7 @@ const Navbar: React.FC = () => {
                   <a
                     href={link.href}
                     className="text-white hover:text-amber-300 transition-colors duration-300 uppercase text-base font-medium"
-                    onClick={() => handleMobileNavClick(link.href)}
+                    onClick={handleMobileNavClick}
                   >
                     {link.name}
                   </a>

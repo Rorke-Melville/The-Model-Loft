@@ -33,7 +33,7 @@ const useMedia = (
   defaultValue: number
 ): number => {
   const [value, setValue] = useState<number>(defaultValue);
-  const [isClient, setIsClient] = useState(false);
+  const [isClient, setIsClient] = useState<boolean>(false);
 
   useEffect(() => {
     setIsClient(true);
@@ -70,8 +70,8 @@ const useMedia = (
 
 const useMeasure = <T extends HTMLElement>() => {
   const ref = useRef<T | null>(null);
-  const [size, setSize] = useState({ width: 0, height: 0 });
-  const [isClient, setIsClient] = useState(false);
+  const [size, setSize] = useState<{ width: number, height: number }>({ width: 0, height: 0 });
+  const [isClient, setIsClient] = useState<boolean>(false);
 
   useEffect(() => {
     setIsClient(true);
@@ -136,6 +136,14 @@ export interface ShowcaseItem {
   height: number;
 }
 
+interface GridItem extends ShowcaseItem {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  containerWidth: number;
+}
+
 interface ShowcaseProps {
   ease?: string;
   duration?: number;
@@ -189,7 +197,7 @@ const Showcase: React.FC<ShowcaseProps> = ({
     1
   );
 
-  const isMobile = useMedia(["(max-width: 767px)"], [true], false);
+  const isMobile = useMedia(["(max-width: 767px)"], [1], 0) === 1;
   const [visibleItems, setVisibleItems] = useState(6);
   const [containerRef, { width: containerWidth, height: containerHeight }] = useMeasure<HTMLDivElement>();
   const [imagesReady, setImagesReady] = useState(false);
@@ -197,9 +205,9 @@ const Showcase: React.FC<ShowcaseProps> = ({
   const [isClient, setIsClient] = useState(false);
 
   // Refs for performance optimization
-  const gridItemsRef = useRef<any[]>([]);
-  const animationFrameRef = useRef<number>();
-  const timelineRef = useRef<gsap.core.Timeline>();
+  const gridItemsRef = useRef<{ items: GridItem[]; containerHeight: number }>({ items: [], containerHeight: 0 });
+  const animationFrameRef = useRef<number | null>(null);
+  const timelineRef = useRef<gsap.core.Timeline | null>(null);
 
   useEffect(() => {
     setIsClient(true);
@@ -218,7 +226,7 @@ const Showcase: React.FC<ShowcaseProps> = ({
     return isMobile ? items.slice(0, visibleItems) : items;
   }, [items, visibleItems, isMobile]);
 
-  const getInitialPosition = useCallback((item: any) => {
+  const getInitialPosition = useCallback((item: GridItem) => {
     const containerRect = containerRef.current?.getBoundingClientRect();
     if (!containerRect) return { x: item.x, y: item.y };
 
@@ -240,7 +248,7 @@ const Showcase: React.FC<ShowcaseProps> = ({
         };
       default: return { x: item.x, y: item.y + 100 };
     }
-  }, [animateFrom, containerWidth, containerHeight]);
+  }, [animateFrom, containerWidth, containerHeight, containerRef]);
 
   useEffect(() => {
     // Load images in batches for better performance
@@ -248,12 +256,12 @@ const Showcase: React.FC<ShowcaseProps> = ({
   }, [items]);
 
   const grid = useMemo(() => {
-    if (!containerWidth) return { items: [], containerHeight: 0 };
+    if (!containerWidth) return { items: [] as GridItem[], containerHeight: 0 };
     
     // Only recalculate if items changed significantly
-    if (gridItemsRef.current.length === displayedItems.length && 
-        Math.abs(gridItemsRef.current[0]?.containerWidth - containerWidth) < 10) {
-      return { items: gridItemsRef.current, containerHeight: gridItemsRef.current.containerHeight };
+    if (gridItemsRef.current.items.length === displayedItems.length && 
+        Math.abs(gridItemsRef.current.items[0]?.containerWidth - containerWidth) < 10) {
+      return { items: gridItemsRef.current.items, containerHeight: gridItemsRef.current.containerHeight };
     }
 
     const colHeights = new Array(columns).fill(0);
@@ -261,7 +269,7 @@ const Showcase: React.FC<ShowcaseProps> = ({
     const totalGaps = (columns - 1) * gap;
     const columnWidth = (containerWidth - totalGaps) / columns;
 
-    const items = displayedItems.map((child) => {
+    const itemsWithPositions: GridItem[] = displayedItems.map((child) => {
       const col = colHeights.indexOf(Math.min(...colHeights));
       const x = col * (columnWidth + gap);
       const height = isMobile ? Math.min(child.height / 2, 280) : child.height / 2;
@@ -271,9 +279,8 @@ const Showcase: React.FC<ShowcaseProps> = ({
     });
 
     const maxHeight = Math.max(...colHeights);
-    const result = { items, containerHeight: maxHeight };
-    gridItemsRef.current = items;
-    gridItemsRef.current.containerHeight = maxHeight;
+    const result = { items: itemsWithPositions, containerHeight: maxHeight };
+    gridItemsRef.current = result;
     
     return result;
   }, [columns, displayedItems, containerWidth, isMobile]);
@@ -423,7 +430,7 @@ const Showcase: React.FC<ShowcaseProps> = ({
     }
 
     setFlippedCard(isExpanding ? id : null);
-  }, [flippedCard, grid.items, isMobile]);
+  }, [flippedCard, grid.items, isMobile, containerRef]);
 
   const handleShowMore = useCallback(() => {
     const currentVisible = visibleItems;

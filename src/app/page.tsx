@@ -30,8 +30,15 @@ export default function Home() {
         onComplete: () => svg.remove(),
       });
     };
-    appRef.current!.addEventListener("click", spark);
-    return () => appRef.current!.removeEventListener("click", spark);
+    const appNode = appRef.current;
+    if (appNode) {
+      appNode.addEventListener("click", spark);
+    }
+    return () => {
+      if (appNode) {
+        appNode.removeEventListener("click", spark);
+      }
+    };
   }, []);
 
   return (
