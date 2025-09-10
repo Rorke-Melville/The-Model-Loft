@@ -5,14 +5,14 @@ A sophisticated clay artist portfolio website showcasing the exceptional work of
 The Model Loft is a mock portfolio website created to showcase high-quality web development skills. It features a fictional clay artist's work with beautiful galleries, interactive elements, and professional presentation. The site demonstrates expertise in modern React development, advanced animations, and responsive design.
 
 ## ✨ Features
-Interactive 3D Card Animation - Custom-built hover effects with smooth rotations and depth
-Responsive Design - Seamless experience across all devices and screen sizes
-Modern Typography - Beautiful gradient text effects and professional layout
-Smooth Animations - Powered by Framer Motion and GSAP for fluid interactions
-WebGL Graphics - Advanced visual effects using OGL for performance-optimized 3D rendering
-Professional Navigation - Clean, intuitive user interface with smooth transitions
-Portfolio Showcase - Elegant presentation of artwork and artist information
-Customer Reviews - Interactive testimonials section
+- Interactive 3D Card Animation - Custom-built hover effects with smooth rotations and depth
+- Responsive Design - Seamless experience across all devices and screen sizes
+- Modern Typography - Beautiful gradient text effects and professional layout
+- Smooth Animations - Powered by Framer Motion and GSAP for fluid interactions
+- WebGL Graphics - Advanced visual effects using OGL for performance-optimized 3D rendering
+- Professional Navigation - Clean, intuitive user interface with smooth transitions
+- Portfolio Showcase - Elegant presentation of artwork and artist information
+- Customer Reviews - Interactive testimonials section
 
 ## 🚀 Tech Stack
 ### Core Framework
