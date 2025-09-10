@@ -16,19 +16,19 @@ Customer Reviews - Interactive testimonials section
 
 ## 🚀 Tech Stack
 ### Core Framework
-Next.js 15.3.4 - React framework with App Router and Turbopack
-React 19 - Latest React with concurrent features
-TypeScript 5 - Full type safety and modern JavaScript features
+- Next.js 15.3.4 - React framework with App Router and Turbopack
+- React 19 - Latest React with concurrent features
+- TypeScript 5 - Full type safety and modern JavaScript features
 ### Styling & UI
-Tailwind CSS 4 - Utility-first CSS framework for rapid styling
-Custom CSS - Advanced gradients, glassmorphism, and visual effects
+- Tailwind CSS 4 - Utility-first CSS framework for rapid styling
+- Custom CSS - Advanced gradients, glassmorphism, and visual effects
 ### Animation & Interactivity
-Framer Motion 12.22 - Production-ready motion library for React
-GSAP 3.13 - Professional-grade animation library for complex sequences
-OGL 1.0.11 - Lightweight WebGL library for 3D graphics and effects
+- Framer Motion 12.22 - Production-ready motion library for React
+- GSAP 3.13 - Professional-grade animation library for complex sequences
+- OGL 1.0.11 - Lightweight WebGL library for 3D graphics and effects
 ### Development Tools
-ESLint 9 - Code linting and quality assurance
-Turbopack - Ultra-fast bundler for development
+- ESLint 9 - Code linting and quality assurance
+- Turbopack - Ultra-fast bundler for development
 ## 🛠 Installation & Setup
 1. Clone the repository
 ```bash
